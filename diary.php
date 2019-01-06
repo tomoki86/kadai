@@ -1,9 +1,13 @@
 <?php
-// require('dbconnect');
+require('dbconnect.php');
 
 date_default_timezone_set('japan');
 $time = intval(date('H'));
 
+// $sql='SELECT *FROM`diary`WHERE`created`=?';
+// $data=[];
+// $stmt=$dbh->prepare($sql);
+// $stmt->execute($data);
 
 ?>
 
@@ -11,7 +15,7 @@ $time = intval(date('H'));
 <body>
   <div class="container-fluid">
 
-    <?php include('navbar.php'); ?>
+    <?php include('layouts/navbar.php'); ?>
 
     <div class="row">
       <div class="col-xs-12">

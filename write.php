@@ -1,7 +1,19 @@
 <?php
-// $sql='INSERT INTO`diary`(`title`,`contents`,`created`)VALUES(?,?,NOW());';
-// $stmt=$dbh->prepare($sql);
-// $stml=execute();
+require('dbconnect.php');
+
+$title='';
+$contents='';
+
+if(!empty($_POST)){
+  $title=$_POST['title'];
+  $contents=$_POST['content'];
+
+  $sql='INSERT INTO`diary`(`title`,`contents`,`created`)VALUES(?,?,NOW());';
+  $data=[$title,$contents];
+  $stmt=$dbh->prepare($sql);
+  $stmt->execute($data);
+}
+
 
 
 ?>
@@ -10,7 +22,7 @@
 <?php include('layouts/header.php'); ?>
 <body>
   <div class="container-fluid">
-    <?php include('navbar.php'); ?>
+    <?php include('layouts/navbar.php'); ?>
     <div class="row">
       <div class="col-lg-12">
          <div class="col-xs-3">
@@ -36,16 +48,16 @@
 
         <div id="New" class="tabcontent">
           <div class="col-xs-9">
-            <div class="write">
-              <form method="POST" action="" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="title" name="input_name" class="form-control" id="title" placeholder="title">
-                    </div>
-                    <div class="form-group">
-                        <input type="content" name="input_content" class="form-control" id="content" placeholder="content">
-                    </div>
-                    <input type="submit" class="btn btn-warning" value="post" >
-                </form>
+            <div class="write" style="border: 0px">
+              <form method="POST" action="write.php" enctype="multipart/form-data">
+                <div class="form-group">
+                  <input type="title" name="title" class="form-control" id="title" placeholder="title">
+                </div>
+                <div class="form-group">
+                  <input type="content" name="content" class="form-control-text" id="content" placeholder="">
+                </div>
+                <input type="submit" class="btn btn-warning" value="post" >
+              </form>
             </div>
           </div>
         </div>
