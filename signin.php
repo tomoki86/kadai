@@ -35,13 +35,13 @@ if (!empty($_POST)) {
         // password_verify(文字列, ハッシュ文字列)
         // 文字列とハッシュ文字列を比較して、
         // 合致する場合true
-        echo '<pre>';
-        var_dump($record['password']);
-        echo'</pre>';
+        // echo '<pre>';
+        // var_dump($record['password']);
+        // echo'</pre>';
 
-        echo '<pre>';
-        var_dump($password);
-        echo'</pre>';
+        // echo '<pre>';
+        // var_dump($password);
+        // echo'</pre>';
 
         if (password_verify($password, $record['password'])) {
             // 認証成功
@@ -49,7 +49,7 @@ if (!empty($_POST)) {
             // 3-1. セッションにユーザのID追加
             $_SESSION['Kadai']['id'] = $record['id'];
             // 3-2. timeline.phpに遷移
-            header('Location: timeline.php');
+            header('Location: write.php');
             exit();
         } else {
             // 認証失敗
@@ -85,7 +85,7 @@ if (!empty($_POST)) {
                     </div>
                     <input type="submit" class="btn btn-info" value="サインイン">
                     <span style="float: right; padding-top: 6px;">
-                        <a href="index.php">戻る</a>
+                        <a href="diary.php">戻る</a>
                     </span>
                 </form>
             </div>
