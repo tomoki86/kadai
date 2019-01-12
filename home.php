@@ -4,7 +4,7 @@ require('dbconnect.php');
 date_default_timezone_set('japan');
 $time = intval(date('H'));
 
-$sql='SELECT *FROM`diary`WHERE`created`<date("Y/R")';
+$sql='SELECT *FROM`diary`WHERE`created`';
 $stmt=$dbh->prepare($sql);
 $stmt->execute();
 while (true) {
@@ -27,7 +27,7 @@ while (true) {
 <body>
   <div class="container-fluid">
 
-    <?php include('layouts/navbar.php'); ?>
+    <?php include('layouts/hnavbar.php'); ?>
 
     <div class="row">
       <div class="col-xs-12">
@@ -35,7 +35,7 @@ while (true) {
         <div class="col-xs-3">
           <h4>
           <?php if (6 <= $time && $time <= 11) {
-          echo 'おはようございます';
+          echo 'おはようございます、ゲストさん';
           }elseif (11 < $time && $time < 18) {
           echo 'こんにちわ、ゲストさん';
           }else {
@@ -60,7 +60,7 @@ while (true) {
           </div>
             <div id="New" class="tabcontent">
               <?php foreach($contents as $content): ?>
-                  <div class="col-xs-9" >
+                  <div class="col-xs-9" style="float: right" >
                     <div class="content">
                       <h3><?php echo$content['title'];?></h3>
                       <p><?php echo$content['updated'];?></p><br>

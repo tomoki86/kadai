@@ -53,9 +53,9 @@ if (!empty($_POST)) {
     if (!isset($_GET['action'])) {
         $file_name = $_FILES['input_img_name']['name'];
     }
-    echo'<pre>';
-    var_dump($file_name);
-    echo'</pre>';
+    // echo'<pre>';
+    // var_dump($file_name);
+    // echo'</pre>';
     if (!empty($file_name)) {
         // 画像が選択されている時の処理
         // 拡張子チェック
@@ -92,7 +92,7 @@ if (!empty($_POST)) {
         $_SESSION['Kadai']['img_name'] = $submit_file_name;
         // 3. 次のページへ遷移する
         // header('Location: 遷移先')
-        die();
+        // die();
         header('Location: check.php');
         exit();
     }
@@ -100,19 +100,19 @@ if (!empty($_POST)) {
 ?>
 <!DOCTYPE html>
 <html lang="ja">
-<?php include('layouts/header.php'); ?>
+<?php include('../layouts/header.php'); ?>
 <body>
   <div class="container-fluid">
-    <?php include('layouts/navbar2.php'); ?>
+    <?php include('../layouts/rnavbar.php'); ?>
     <div class="row" style="height: 130px">
       <p>hoge</p>
     </div>
     <div class="row">
       <div class="col-xs-6">
       </div>
-      <div class="col-xs-6 thumbnail" style="width :40%; border: 0px;">
-        <form method="POST" action="signup.php" enctype="multipart/form-data">
-          <div class="form-group">
+      <div class="col-xs-6 thumbnail" style="float: right; margin-right: 130px;">
+        <form method="POST" action="login.php" enctype="multipart/form-data">
+          <div class="form-group" style="">
             <label for="name">ユーザー名</label>
             <input type="text" name="input_name" class="form-control" id="name" placeholder="山田 太郎" value="<?php echo htmlspecialchars($name); ?>">
             <!-- 4. 不備が配列変数に格納されている場合、画面に出力 -->
@@ -162,5 +162,6 @@ if (!empty($_POST)) {
         </form>
       </div>
     </div>
+    <?php include('../layouts/footer.php'); ?>
   </div>
 </body>

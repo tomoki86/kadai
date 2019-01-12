@@ -1,5 +1,18 @@
 <?php
+session_start();
 require('dbconnect.php');
+
+if(!isset($_SESSION['Kadai']['id'])){
+   header('Location:home.php');
+   exit();
+}
+
+$sql='SELECT *FROM`users`WHERE`id`=?';
+$data=[$_SESSION['Kadai']['id']];
+$stmt=$dbh->prepare($sql);
+$stmt->execute($data);
+$signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
+
 
 $title='';
 $contents='';
@@ -54,7 +67,7 @@ if(!empty($_POST)){
                   <input type="title" name="title" class="form-control" id="title" placeholder="title">
                 </div>
                 <div class="form-group">
-                  <input type="content" name="content" class="form-control-text" id="content" placeholder="">
+                  <input type="content" name="content" class="form-control-text" style="width: 80%" id="content" placeholder="">
                 </div>
                 <input type="submit" class="btn btn-warning" value="post" >
               </form>

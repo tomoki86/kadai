@@ -5,12 +5,12 @@ session_start();
 require('../dbconnect.php');
 
 if (!isset($_SESSION['Kadai'])){
-    header('Location:signup.php');
+    header('Location:login.php');
              exit();
 }
-echo '<pre>';
-var_dump($_SESSION);
-echo'</pre>';
+// echo '<pre>';
+// var_dump($_SESSION);
+// echo'</pre>';
 
 // echo $_SESSION['Kadai']['name'].'<br>';
 // echo $_SESSION['Kadai']['email'].'<br>';
@@ -20,7 +20,7 @@ echo'</pre>';
 $name =$_SESSION['Kadai']['name'];
 $email =$_SESSION['Kadai']['email'];
 $password =$_SESSION['Kadai']['password'];
-// $file_name =$_SESSION['Kadai']['img_name'];
+$file_name =$_SESSION['Kadai']['img_name'];
 $img_name =$_SESSION['Kadai']['img_name'];
 
 // if (!empty($_POST)){
@@ -48,21 +48,20 @@ exit();
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="utf-8">
-    <title>Learn SNS</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
+<?php include('../layouts/header.php'); ?>
 </head>
 <body style="margin-top: 60px">
+<div class="container-fluid">
+    <?php include('../layouts/rnavbar.php'); ?>
     <div class="container">
         <div class="row">
-            <div class="col-xs-8 col-xs-offset-2 thumbnail">
+            <div class="thumbnail">
                 <h2 class="text-center content_header">アカウント情報確認</h2>
                 <div class="row">
                     <div class="col-xs-4">
-                        <img src="../user_profile_img/<?php echo htmlspecialchars($file_name)?>" class="img-responsive img-thumbnail">
+                        <img src="../user_profile_img/<?php echo htmlspecialchars($file_name)?>" class="img-responsive img-thumbnail" style="width: 250px; height: 250px; object-fit: cover">
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-">
                         <div>
                             <span>ユーザー名</span>
                             <p class="lead"><?php echo htmlspecialchars($name)?></p>
@@ -89,8 +88,10 @@ exit();
             </div>
         </div>
     </div>
+    <?php include('../layouts/footer.php'); ?>
     <script src="../assets/js/jquery-3.1.1.js"></script>
     <script src="../assets/js/jquery-migrate-1.4.1.js"></script>
     <script src="../assets/js/bootstrap.js"></script>
+</div>
 </body>
 </html>

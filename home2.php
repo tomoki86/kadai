@@ -1,10 +1,17 @@
 <?php
+session_start();
 require('dbconnect.php');
 
 date_default_timezone_set('japan');
 $time = intval(date('H'));
 
-$sql='SELECT *FROM`diary`WHERE`created`<date("Y/R")';
+$sql='SELECT *FROM`users`WHERE`id`=?';
+$data=[$_SESSION['Kadai']['id']];
+$stmt=$dbh->prepare($sql);
+$stmt->execute($data);
+$signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
+
+$sql='SELECT *FROM`diary`WHERE`created`';
 $stmt=$dbh->prepare($sql);
 $stmt->execute();
 while (true) {
@@ -35,11 +42,11 @@ while (true) {
         <div class="col-xs-3">
           <h4>
           <?php if (6 <= $time && $time <= 11) {
-          echo 'おはようございます';
+          echo 'おはようございます。'.$signin_user['name'].'さん';
           }elseif (11 < $time && $time < 18) {
-          echo 'こんにちわ、ゲストさん';
+          echo '午後は流し作業。'.$signin_user['name'].'さん';
           }else {
-          echo 'こんばんわ、ゲストさん';
+          echo '今日も一日お疲れ様です。'.$signin_user['name'].'さん';
           }
           ?>
           </h4><br>
@@ -60,7 +67,7 @@ while (true) {
           </div>
             <div id="New" class="tabcontent">
               <?php foreach($contents as $content): ?>
-                  <div class="col-xs-9" >
+                  <div class="col-xs-9" style="float: right">
                     <div class="content">
                       <h3><?php echo$content['title'];?></h3>
                       <p><?php echo$content['updated'];?></p><br>
