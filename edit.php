@@ -13,27 +13,27 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 $signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
 
-if(!empty($_POST)){
-    $name =$_POST['input_name'];
-    $email =$_POST['input_email'];
-    if ($name == '') {
-        $errors['input_name'] = 'blank';
-      }
-    if ($email == '') {
-        $errors['input_email'] = 'blank';
-      }
-    if(empty($errors)){
-        //更新ボタンを押すとupdate
-        $sql = 'UPDATE `users` SET `name`= ?,`email`=? WHERE `id` = ?';
-        $data = [$_POST['input_name'],$_POST['input_email'],$_POST['user_id']];
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute($data);
+// if(!empty($_POST)){
+//     $name =$_POST['input_name'];
+//     $email =$_POST['input_email'];
+//     if ($name == '') {
+//         $errors['input_name'] = 'blank';
+//       }
+//     if ($email == '') {
+//         $errors['input_email'] = 'blank';
+//       }
+//     if(empty($errors)){
+//         //更新ボタンを押すとupdate
+//         $sql = 'UPDATE `users` SET `name`= ?,`email`=? WHERE `id` = ?';
+//         $data = [$_POST['input_name'],$_POST['input_email'],$_POST['user_id']];
+//         $stmt = $dbh->prepare($sql);
+//         $stmt->execute($data);
 
-        //マイページから遷移してるのでマイページへ返す
-        header('Location: edit.php');
-        exit();
-    }
-}
+//         //マイページから遷移してるのでマイページへ返す
+//         header('Location: edit.php');
+//         exit();
+//     }
+// }
 
 
 ?>
