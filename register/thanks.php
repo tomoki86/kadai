@@ -9,11 +9,14 @@ session_start();
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>Learn SNS</title>
+    <title>nexseed diary</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
 </head>
-<body style="margin-top: 60px">
+<body>
+    <div class="row" style="height: 80px">
+      <p>hoge</p>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2 thumbnail">

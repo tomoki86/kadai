@@ -11,9 +11,26 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 $signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
 
-$sql='SELECT *FROM`diary`WHERE`created`';
+$target = date('Y-m-d');
+
+$month_first = date('Y-m-d 00:00:00', strtotime('first day of' . $target));
+$month_last = date('Y-m-d 23:59:59',strtotime('last day of'.$target));
+
+$month_first1 = date('Y-m-d 00:00:00', strtotime('first day of -1 month' . $target));
+$month_last1 = date('Y-m-d 23:59:59',strtotime('last day of -1 month'.$target));
+
+$month_first2 = date('Y-m-d 00:00:00', strtotime('first day of -2 month' . $target));
+$month_last2 = date('Y-m-d 23:59:59',strtotime('last day of -2 month'.$target));
+
+// echo'<pre>';
+// echo var_dump($month_first1);
+// echo'</pre>';
+
+$sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`d`.`created`BETWEEN ? AND ?' ;
+$data=[$month_first,$month_last];
 $stmt=$dbh->prepare($sql);
-$stmt->execute();
+$stmt->execute($data);
+
 while (true) {
     // $recordは要するにfeed一件の情報
     $record = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -23,10 +40,39 @@ while (true) {
     }
     $contents[]=$record;
 }
-
 // echo'<pre>';
-// var_dump($contents);
+// echo var_dump($contents);
 // echo'</pre>';
+
+$sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`d`.`created`BETWEEN ? AND ?' ;
+$data=[$month_first1,$month_last1];
+$stmt=$dbh->prepare($sql);
+$stmt->execute($data);
+
+while (true) {
+    // $recordは要するにfeed一件の情報
+    $record1 = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($record1 == false) {
+        // レコードが取れなくなったらループを抜ける
+        break;
+    }
+    $contents1[]=$record1;
+}
+
+$sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`d`.`created`BETWEEN ? AND ?' ;
+$data=[$month_first2,$month_last2];
+$stmt=$dbh->prepare($sql);
+$stmt->execute($data);
+
+while (true) {
+    // $recordは要するにfeed一件の情報
+    $record2 = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($record2 == false) {
+        // レコードが取れなくなったらループを抜ける
+        break;
+    }
+    $contents2[]=$record2;
+}
 
 ?>
 
@@ -37,7 +83,6 @@ while (true) {
     <?php include('layouts/navbar.php'); ?>
 
     <div class="row">
-      <div class="col-xs-12">
 
         <div class="col-xs-3">
           <h4>
@@ -64,38 +109,56 @@ while (true) {
             echo date("Y/n", strtotime(date('Y/n/1') . '-2 month'));
             // date()で日時を出力
             ;?>月の日記</a><hr>
-          </div>
-            <div id="New" class="tabcontent">
-              <?php foreach($contents as $content): ?>
-                  <div class="col-xs-9" style="float: right">
-                    <div class="content">
-                      <h3><?php echo$content['title'];?></h3>
-                      <p><?php echo$content['updated'];?></p><br>
-                    </div>
-                  </div>
-              <?php endforeach ;?>
-            </div>
+        </div>
 
-            <div id="Pre" class="tabcontent">
-              <div class="col-xs-9">
+        <div id="New" class="tabcontent">
+          <?php foreach($contents as $content): ?>
+              <div class="col-xs-9" style="float: right; margin-bottom: 5px;"  >
                 <div class="content">
-                  <h3>こんにちわ</h3>
-                  <p>12月10日</p><br>
+                  <h3><a href="content2.php?user_id=<?php echo$content['user_id'];?>"><?php echo$content['title'];?></a></h3>
+                  <p>name: <?php echo $content['name'];?><p></p><?php echo$content['created'];?>
+                   <?php if($signin_user['id']!=$content['user_id']): ?>
+                      <?php if($content['like_count'] == 0): ?>
+                          <div class="form-group center-block">
+                          <a href="like.php?like_id=<?php echo $content['id']; ?>"class="btn btn-sm btn-success center-block>
+                          <button type="submit" style="float: left; margin-top: 10px">like</a>
+                          </div>
+                      <?php else: ?>
+                          <div class="form-group center-block">
+                          <a href="like.php?like_id=<?php echo $content['id']; ?>& unlike=true"class="btn btn-sm btn-danger center-block>
+                          <button type="submit" style="float: left; margin-top: 10px">Cancel</a>
+                          </div>
+                      <?php endif; ?>
+                   <?php endif; ?>
+                 </p>
                 </div>
               </div>
-            </div>
+          <?php endforeach ;?>
+        </div>
 
-            <div id="2mon" class="tabcontent">
-              <div class="col-xs-9">
+        <div id="Pre" class="tabcontent">
+          <?php foreach($contents1 as $content1): ?>
+              <div class="col-xs-9" style="float: right; margin-bottom: 5px;"  >
                 <div class="content">
-                  <h3>こんにちわ</h3>
-                  <p>11月10日</p><br>
+                  <h3><a href="content.php"><?php echo$content['title'];?></a></h3>
+                  <p>name: <?php echo $content['name'];?><p></p><?php echo$content1['created'];?></p><br>
                 </div>
               </div>
-            </div>
+          <?php endforeach ;?>
+        </div>
+
+        <div id="2mon" class="tabcontent">
+          <?php foreach($contents2 as $content2): ?>
+              <div class="col-xs-9" style="float: right; margin-bottom: 5px;"  >
+                <div class="content">
+                  <h3><a href="content.php"><?php echo$content['title'];?></a></h3>
+                  <p>name: <?php echo $content['name'];?><p></p><?php echo$content2['created'];?></p><br>
+                </div>
+              </div>
+          <?php endforeach ;?>
+        </div>
 
       </div>
-    </div>
     <?php include('layouts/footer.php'); ?>
   </div>
 </body>

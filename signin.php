@@ -49,7 +49,7 @@ if (!empty($_POST)) {
             // 3-1. セッションにユーザのID追加
             $_SESSION['Kadai']['id'] = $record['id'];
             // 3-2. timeline.phpに遷移
-            header('Location: write.php');
+            header('Location: home2.php');
             exit();
         } else {
             // 認証失敗
@@ -60,10 +60,14 @@ if (!empty($_POST)) {
 }
 ?>
 <?php include('layouts/header.php'); ?>
-<body style="margin-top: 60px">
+<div class="container-fluid">
+    <?php include('layouts/hnavbar.php'); ?>
+    <div class="row" style="height: 80px">
+      <p>hoge</p>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="col-xs-8 col-xs-offset-2 thumbnail">
+            <div class="col-xs-6 col-xs-offset-3 thumbnail">
                 <h2 class="text-center content_header">サインイン</h2>
                 <?php if (isset($errors['signin']) && $errors['signin'] == 'failed'): ?>
                     <p class="text-danger">サインインに失敗しました</p>
@@ -85,12 +89,13 @@ if (!empty($_POST)) {
                     </div>
                     <input type="submit" class="btn btn-info" value="サインイン">
                     <span style="float: right; padding-top: 6px;">
-                        <a href="diary.php">戻る</a>
+                        <a href="home.php">戻る</a>
                     </span>
                 </form>
             </div>
         </div>
     </div>
+</div>
 </body>
-<?php include('layouts/header.php'); ?>
+<?php include('layouts/footer.php'); ?>
 </html>
