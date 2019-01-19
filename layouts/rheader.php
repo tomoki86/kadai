@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>nexseed diary</title>
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="assets/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 
 <!-- navbar -->
   <meta name="viewport" content="width=device-width, initial-scale=1">

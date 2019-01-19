@@ -100,17 +100,17 @@ if (!empty($_POST)) {
 ?>
 <!DOCTYPE html>
 <html lang="ja">
-<?php include('../layouts/header.php'); ?>
+<?php include('../layouts/rheader.php'); ?>
 <body>
   <div class="container-fluid">
-    <?php include('../layouts/rnavbar.php'); ?>
-    <div class="row" style="height: 130px">
+    <?php include('../layouts/hnavbar.php'); ?>
+    <div class="row" style="height: 80px">
       <p>hoge</p>
     </div>
     <div class="row">
       <div class="col-xs-6">
       </div>
-      <div class="col-xs-6 thumbnail" style="float: right; margin-right: 130px;">
+      <div class="col-xs-6">
         <form method="POST" action="login.php" enctype="multipart/form-data">
           <div class="form-group" style="">
             <label for="name">ユーザー名</label>
@@ -156,8 +156,8 @@ if (!empty($_POST)) {
             <?php endif; ?>
           </div>
           <input type="submit" class="btn btn-default" value="確認">
-          <span style="float: right; padding-top: 6px;">ログインは
-              <a href="../signin.php">こちら</a>
+          <span>  ログインは
+            <a href="../signin.php">こちら</a>
           </span>
         </form>
       </div>

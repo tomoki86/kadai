@@ -1,4 +1,4 @@
-<?php
+    <?php
 session_start();
 
 // require(読み込みたいファイル名)
@@ -48,50 +48,52 @@ exit();
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<?php include('../layouts/header.php'); ?>
+<?php include('../layouts/rheader.php'); ?>
 </head>
-<body style="margin-top: 60px">
+<body>
 <div class="container-fluid">
-    <?php include('../layouts/rnavbar.php'); ?>
+    <?php include('../layouts/hnavbar.php'); ?>
+    <div class="row" style="height: 80px">
+      <p>hoge</p>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="thumbnail">
-                <h2 class="text-center content_header">アカウント情報確認</h2>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <img src="../user_profile_img/<?php echo htmlspecialchars($file_name)?>" class="img-responsive img-thumbnail" style="width: 250px; height: 250px; object-fit: cover">
-                    </div>
-                    <div class="col-xs-">
-                        <div>
-                            <span>ユーザー名</span>
-                            <p class="lead"><?php echo htmlspecialchars($name)?></p>
-                        </div>
-                        <div>
-                            <span>メールアドレス</span>
-                            <p class="lead"><?php echo htmlspecialchars($name)?></p>
-                        </div>
-                        <div>
-                            <span>パスワード</span>
-                            <p class="lead">●●●●●●●●</p>
-                        </div>
-                        <form method="POST" action="check.php">
-                            <!-- GET送信時のパラメーターURL？キー＝値 -->
-                            <a href="signup.php?action=rewrite" class="btn btn-default">&laquo;&nbsp;戻る</a>
-                             <!-- DBに登録したい値は$_SESSIONが保持されているので
-                             formから送信する必要がないが、！empty（POST）処理をするために
-                             input type="hiddenを使用して$_POSTを空じゃない状態にしている -->
-                            <input type="hidden" name="action" value="submit">
-                            <input type="submit" class="btn btn-primary" value="ユーザー登録">
-                        </form>
-                    </div>
-                </div>
+            <div class="col-xs-4">
+
+                <img src="../user_profile_img/<?php echo htmlspecialchars($file_name)?>" class="img-responsive img-thumbnail" style="width: 250px; height: 250px; object-fit: cover">
             </div>
+            <div class="col-xs-8">
+
+                <div>
+                    <span>ユーザー名</span>
+                    <p class="lead"><?php echo htmlspecialchars($name)?></p>
+                </div>
+                <div>
+                    <span>メールアドレス</span>
+                    <p class="lead"><?php echo htmlspecialchars($email)?></p>
+                </div>
+                <div>
+                    <span>パスワード</span>
+                    <p class="lead">●●●●●●●●</p>
+                </div>
+                <form method="POST" action="check.php">
+                    <!-- GET送信時のパラメーターURL？キー＝値 -->
+                    <a href="signup.php?action=rewrite" class="btn btn-default">&laquo;&nbsp;戻る</a>
+                     <!-- DBに登録したい値は$_SESSIONが保持されているので
+                     formから送信する必要がないが、！empty（POST）処理をするために
+                     input type="hiddenを使用して$_POSTを空じゃない状態にしている -->
+                    <input type="hidden" name="action" value="submit">
+                    <input type="submit" class="btn btn-primary" value="ユーザー登録">
+                </form>
+            </div>
+
         </div>
+
     </div>
     <?php include('../layouts/footer.php'); ?>
+</div>
+</body>
     <script src="../assets/js/jquery-3.1.1.js"></script>
     <script src="../assets/js/jquery-migrate-1.4.1.js"></script>
     <script src="../assets/js/bootstrap.js"></script>
-</div>
-</body>
 </html>
