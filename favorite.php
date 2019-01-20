@@ -13,6 +13,9 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 $signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
 
+
+$contents =[];
+
 $sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`like_count`=1';
 $stmt=$dbh->prepare($sql);
 $stmt->execute();
@@ -27,6 +30,16 @@ while (true) {
     $contents[]=$record;
 }
 
+// echo'<pre>';
+// var_dump($record);
+// echo'</pre>';
+// echo'<pre>';
+// var_dump($contents);
+// echo'</pre>';
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -37,13 +50,13 @@ while (true) {
     <?php include('layouts/navbar.php'); ?>
     <div class="row">
       <div class="col-xs-3">
-          <h4>
-          </h4><br>
-          <a class="tablinks" onclick="openCity(event, 'like')" id="defaultOpen">いいねした記事</a><hr>
+        <h4>
+        </h4><br>
+        <a class="tablinks" onclick="openCity(event, 'like')" id="defaultOpen">いいねした記事</a><hr>
 
-          <a class="tablinks" onclick="openCity(event, 'liked')">いいねされた記事</a><hr>
-
+        <a class="tablinks" onclick="openCity(event, 'liked')">いいねされた記事</a><hr>
       </div>
+
       <div id="like" class="tabcontent">
         <?php foreach($contents as $content): ?>
           <div class="col-xs-9" style="float: right; margin-bottom: 5px;"  >
@@ -57,8 +70,9 @@ while (true) {
       </div>
 
       <div id="liked" class="tabcontent">
-
+        
       </div>
+
     </div>
     <?php include('layouts/footer.php'); ?>
   </div>

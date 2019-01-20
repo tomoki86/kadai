@@ -31,6 +31,7 @@ $data=[$month_first,$month_last];
 $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 
+
 while (true) {
     // $recordは要するにfeed一件の情報
     $record = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -38,11 +39,33 @@ while (true) {
         // レコードが取れなくなったらループを抜ける
         break;
     }
+$like_flg_sql = 'SELECT * FROM `likes` WHERE `user_id` = ? AND `content_id` = ?';
+    // likesテーブルからuser_idがサインインしているユーザーのid且つfeed_idが投稿データのidのレコードデータを取得
+$like_flg_data = [$signin_user['id'], $record['id']];
+$like_flg_stmt = $dbh->prepare($like_flg_sql);
+$like_flg_stmt->execute($like_flg_data);
+$is_liked = $like_flg_stmt->fetch(PDO::FETCH_ASSOC);
+$record['is_liked'] = $is_liked ? true : false; // 三項演算子
     $contents[]=$record;
 }
 // echo'<pre>';
 // echo var_dump($contents);
 // echo'</pre>';
+
+// $like = [];
+// $like_sql='SELECT * FROM`likes`';
+// $like_stmt = $dbh->prepare($like_sql);
+// $like_stmt->execute();
+
+// while (true) {
+//     // $recordは要するにfeed一件の情報
+//     $record3 = $like_stmt->fetch(PDO::FETCH_ASSOC);
+//     if ($record3 == false) {
+//         // レコードが取れなくなったらループを抜ける
+//         break;
+//     }
+//     $like[]=$record3;
+// }
 
 $sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`d`.`created`BETWEEN ? AND ?' ;
 $data=[$month_first1,$month_last1];
@@ -73,6 +96,7 @@ while (true) {
     }
     $contents2[]=$record2;
 }
+
 
 ?>
 
@@ -118,17 +142,23 @@ while (true) {
                   <h3><a href="content2.php?user_id=<?php echo$content['user_id'];?>"><?php echo$content['title'];?></a></h3>
                   <p>name: <?php echo $content['name'];?><p></p><?php echo$content['created'];?>
                    <?php if($signin_user['id']!=$content['user_id']): ?>
-                      <?php if($content['like_count'] == 0): ?>
+                            <?php if($content['like_count']==0): ?>
+
+
                           <div class="form-group center-block">
                           <a href="like.php?like_id=<?php echo $content['id']; ?>"class="btn btn-sm btn-success center-block>
                           <button type="submit" style="float: left; margin-top: 10px">like</a>
                           </div>
-                      <?php else: ?>
+                            <?php else: ?>
+
+
                           <div class="form-group center-block">
                           <a href="like.php?like_id=<?php echo $content['id']; ?>& unlike=true"class="btn btn-sm btn-danger center-block>
                           <button type="submit" style="float: left; margin-top: 10px">Cancel</a>
                           </div>
-                      <?php endif; ?>
+                            <?php endif; ?>
+
+
                    <?php endif; ?>
                  </p>
                 </div>
