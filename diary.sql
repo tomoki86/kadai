@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2018 年 11 月 26 日 05:14
+-- Generation Time: 2019 年 1 月 20 日 19:40
 -- サーバのバージョン： 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `diary`
+-- Database: `Kadai`
 --
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `items`
+-- テーブルの構造 `diary`
 --
 
 CREATE TABLE `diary` (
@@ -33,8 +33,21 @@ CREATE TABLE `diary` (
   `title` text NOT NULL,
   `contents` text NOT NULL,
   `user_id` int(11) NOT NULL,
+  `like_count` int(255) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `likes`
+--
+
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -57,11 +70,16 @@ CREATE TABLE `users` (
 -- Indexes for dumped tables
 --
 
-
 --
--- Indexes for table `items`
+-- Indexes for table `diary`
 --
 ALTER TABLE `diary`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `likes`
+--
+ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -74,18 +92,23 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for dumped tables
 --
 
-
 --
--- AUTO_INCREMENT for table `items`
+-- AUTO_INCREMENT for table `diary`
 --
 ALTER TABLE `diary`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `likes`
+--
+ALTER TABLE `likes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

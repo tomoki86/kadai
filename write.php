@@ -13,9 +13,7 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 $signin_user=$stmt->fetch(PDO::FETCH_ASSOC);
 
-echo'<pre>';
-echo var_dump($data);
-echo'</pre>';
+
 
 $title='';
 $article='';
@@ -43,7 +41,7 @@ $month_last2 = date('Y-m-d 23:59:59',strtotime('last day of -2 month'.$target));
 
 
 
-$sql='SELECT `d`.* ,`u`.`id`,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE(`d`.`created`BETWEEN ? AND ?),`u`.`id`=`?`';
+$sql='SELECT `d`.* ,`u`.`id`,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE(`d`.`created`BETWEEN ? AND ?)AND`u`.`id`=?';
 $data=[$month_first,$month_last,$_SESSION['Kadai']['id']];
 $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
