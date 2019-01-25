@@ -33,24 +33,29 @@ $stmt->execute($data);
 
 
 while (true) {
-    // $recordは要するにfeed一件の情報
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($record == false) {
-        // レコードが取れなくなったらループを抜ける
-        break;
-    }
-$like_flg_sql = 'SELECT * FROM `likes` WHERE `user_id` = ? AND `content_id` = ?';
-    // likesテーブルからuser_idがサインインしているユーザーのid且つfeed_idが投稿データのidのレコードデータを取得
-$like_flg_data = [$signin_user['id'], $record['id']];
-$like_flg_stmt = $dbh->prepare($like_flg_sql);
-$like_flg_stmt->execute($like_flg_data);
-$is_liked = $like_flg_stmt->fetch(PDO::FETCH_ASSOC);
-$record['is_liked'] = $is_liked ? true : false; // 三項演算子
-    $contents[]=$record;
+
+  // $recordは要するにfeed一件の情報
+  $record = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($record == false) {
+
+    // レコードが取れなくなったらループを抜ける
+    break;
+  }
+  $like_flg_sql = 'SELECT * FROM `likes` WHERE `user_id` = ? AND `content_id` = ?';
+      // likesテーブルからuser_idがサインインしているユーザーのid且つfeed_idが投稿データのidのレコードデータを取得
+  $like_flg_data = [$signin_user['id'], $record['id']];
+  $like_flg_stmt = $dbh->prepare($like_flg_sql);
+  $like_flg_stmt->execute($like_flg_data);
+  $is_liked = $like_flg_stmt->fetch(PDO::FETCH_ASSOC);
+  $record['is_liked'] = $is_liked ? true : false; // 三項演算子
+  $contents[]=$record;
 }
-// echo'<pre>';
-// echo var_dump($contents);
-// echo'</pre>';
+  echo'<pre>';
+  echo var_dump($signin_user['id']);
+  echo'</pre>';
+  echo'<pre>';
+  echo var_dump($record);
+  echo'</pre>';
 
 // $like = [];
 // $like_sql='SELECT * FROM`likes`';
@@ -73,13 +78,13 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 
 while (true) {
-    // $recordは要するにfeed一件の情報
-    $record1 = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($record1 == false) {
-        // レコードが取れなくなったらループを抜ける
-        break;
-    }
-    $contents1[]=$record1;
+  // $recordは要するにfeed一件の情報
+  $record1 = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($record1 == false) {
+      // レコードが取れなくなったらループを抜ける
+      break;
+  }
+  $contents1[]=$record1;
 }
 
 $sql='SELECT `d`.* ,`u`.`name`,`u`.`img_name`FROM`diary`AS`d`LEFT JOIN`users` AS `u` ON `d`.`user_id` = `u`.`id`WHERE`d`.`created`BETWEEN ? AND ?' ;
@@ -88,13 +93,13 @@ $stmt=$dbh->prepare($sql);
 $stmt->execute($data);
 
 while (true) {
-    // $recordは要するにfeed一件の情報
-    $record2 = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($record2 == false) {
-        // レコードが取れなくなったらループを抜ける
-        break;
-    }
-    $contents2[]=$record2;
+  // $recordは要するにfeed一件の情報
+  $record2 = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($record2 == false) {
+      // レコードが取れなくなったらループを抜ける
+      break;
+  }
+  $contents2[]=$record2;
 }
 
 
@@ -136,34 +141,29 @@ while (true) {
         </div>
 
         <div id="New" class="tabcontent">
+
           <?php foreach($contents as $content): ?>
               <div class="col-xs-9" style="float: right; margin-bottom: 5px;"  >
                 <div class="content">
                   <h3><a href="content2.php?user_id=<?php echo$content['user_id'];?>"><?php echo$content['title'];?></a></h3>
                   <p>name: <?php echo $content['name'];?><p></p><?php echo$content['created'];?>
+
                    <?php if($signin_user['id']!=$content['user_id']): ?>
-                            <?php if($content['like_count']==0): ?>
 
+                      <?php if($content['is_liked']): ?>
+                        <button class="btn btn-info js-unlike"><span>cancel</span></button>
 
-                          <div class="form-group center-block">
-                          <a href="like.php?like_id=<?php echo $content['id']; ?>"class="btn btn-sm btn-success center-block>
-                          <button type="submit" style="float: left; margin-top: 10px">like</a>
-                          </div>
-                            <?php else: ?>
+                      <?php else: ?>
+                        <button class="btn btn-default js-like"><span>like</span></button>
 
-
-                          <div class="form-group center-block">
-                          <a href="like.php?like_id=<?php echo $content['id']; ?>& unlike=true"class="btn btn-sm btn-danger center-block>
-                          <button type="submit" style="float: left; margin-top: 10px">Cancel</a>
-                          </div>
-                            <?php endif; ?>
-
+                      <?php endif; ?>
 
                    <?php endif; ?>
                  </p>
                 </div>
               </div>
           <?php endforeach ;?>
+
         </div>
 
         <div id="Pre" class="tabcontent">
@@ -192,7 +192,7 @@ while (true) {
     <?php include('layouts/footer.php'); ?>
   </div>
 </body>
-
+<?php include('layouts/script.php'); ?>
 <script>
 
 function openCity(evt, cityName) {
